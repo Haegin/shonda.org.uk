@@ -32,9 +32,12 @@ end
 gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
 
 # To use debugger
 # gem 'debugger'
 
 gem 'locomotive_cms', '~> 2.4.1', :require => 'locomotive/engine'
+
+gem 'dragonfly', '~> 0.9.15'
+gem 'rack-cache', :require => 'rack/cache'

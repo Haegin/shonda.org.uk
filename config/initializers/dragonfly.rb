@@ -6,6 +6,8 @@ app = Dragonfly[:images]
 app.configure_with(:rails)
 app.configure_with(:imagemagick)
 
+app.define_macro_on_include(Mongoid::Document, :image_accessor)
+
 ## configure it ##
 
 Dragonfly[:images].configure do |c|
