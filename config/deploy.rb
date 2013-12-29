@@ -1,3 +1,7 @@
+require "bundler/capistrano"
+
+server "192.81.222.50", :web, :app, :db, primary: true
+
 set :application, "shonda.org.uk"
 set :user, "shonda"
 set :port, 22
