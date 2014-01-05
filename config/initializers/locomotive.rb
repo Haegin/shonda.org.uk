@@ -43,7 +43,7 @@ Locomotive.configure do |config|
   # Ex:
   # config.mailer_sender = 'support@example.com'
   # # => 'support@heroku.com' (Heroku), 'support@bushi.do' (Bushido), 'support@example.com' (Dev) or 'support@<your_hosting_platform>' (Multi-sites)
-  config.mailer_sender = 'support@example.com'
+  config.mailer_sender = 'support@shonda.org.uk'
 
   # allow apps using the engine to add their own Liquid drops, variables and similar available
   # in Liquid templates, extending the assigns used while rendering.
@@ -58,7 +58,7 @@ Locomotive.configure do |config|
   #
   # Note: we strongly recommend to enable it. See the documentation about the "csrf_param" liquid tag.
   #
-  # config.csrf_protection = true
+  config.csrf_protection = true
 
   # Rack-cache settings, mainly used for the inline resizing image module. Default options:
   # config.rack_cache = {
