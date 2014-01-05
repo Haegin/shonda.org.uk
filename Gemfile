@@ -31,8 +31,8 @@ end
 # Use unicorn as the app server
 gem 'unicorn'
 
-# Deploy with Capistrano
-gem 'capistrano'
+# Deploy with Mina
+gem 'mina', :git => 'git@github.com:nadarei/mina', :ref => 'd6d68624cb57aa8378e86a31dedc104418b868b5'
 
 # To use debugger
 # gem 'debugger'
