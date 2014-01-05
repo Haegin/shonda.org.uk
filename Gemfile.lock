@@ -1,5 +1,5 @@
 GIT
-  remote: git@github.com:nadarei/mina
+  remote: https://github.com/nadarei/mina
   revision: d6d68624cb57aa8378e86a31dedc104418b868b5
   ref: d6d68624cb57aa8378e86a31dedc104418b868b5
   specs:
