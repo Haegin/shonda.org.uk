@@ -103,6 +103,7 @@ task :deploy => :environment do
       invoke 'unicorn:stop'
       invoke 'unicorn:start'
     end
+  end
 end
 
 # For help in making your deploy script, see the Mina documentation:
