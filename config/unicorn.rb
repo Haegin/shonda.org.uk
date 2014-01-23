@@ -1,12 +1,21 @@
-root = "/home/shonda/shonda.org.uk/current"
-working_directory root
-pid "#{root}/tmp/pids/unicorn.pid"
-stderr_path "#{root}/log/unicorn.log"
-stdout_path "#{root}/log/unicorn.log"
+workers = ENV['WORKER_COUNT'].to_i
+workers = 4 if workers == 0
+
+rails_env = ENV['RAILS_ENV']
+worker_processes workers
+
+preload_app true
+timeout 300
+
+APP_PATH = "/home/shonda/shonda.org.uk/current"
+working_directory APP_PATH
+
+stderr_path "#{APP_PATH}/log/unicorn.log"
+stdout_path "#{APP_PATH}/log/unicorn.log"
+
+pid "#{APP_PATH}/tmp/pids/unicorn.pid"
 
 listen "/tmp/unicorn.shonda.sock"
-worker_processes 2
-timeout 30
 
 # Force the bundler gemfile environment variable to
 # reference the capistrano "current" symlink
