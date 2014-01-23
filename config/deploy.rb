@@ -78,37 +78,38 @@ namespace :unicorn do
     chruby-exec 1.9.3 -- bundle exec unicorn -c #{app_path}/config/unicorn/#{rails_env}.rb -E #{rails_env} -D
     }
 
-    #                                                                    Start task
-    # ------------------------------------------------------------------------------
-    desc "Start unicorn"
-    task :start => :environment do
-      queue 'echo "-----> Start Unicorn"'
-      queue! start_unicorn
-    end
+  #                                                                    Start task
+  # ------------------------------------------------------------------------------
+  desc "Start unicorn"
+  task :start => :environment do
+    queue 'echo "-----> Start Unicorn"'
+    queue! start_unicorn
+  end
 
-    #                                                                     Stop task
-    # ------------------------------------------------------------------------------
-    desc "Stop unicorn"
-    task :stop do
-      queue 'echo "-----> Stop Unicorn"'
-      queue! %{
+  #                                                                     Stop task
+  # ------------------------------------------------------------------------------
+  desc "Stop unicorn"
+  task :stop do
+    queue 'echo "-----> Stop Unicorn"'
+    queue! %{
       test -s "#{unicorn_pid}" && kill -QUIT `cat "#{unicorn_pid}"` && echo "Stop Ok" && exit 0
       echo >&2 "Not running"
-      }
-    end
+    }
+  end
 
-    #                                                                  Restart task
-    # ------------------------------------------------------------------------------
-    desc "Restart unicorn using 'upgrade'"
-    task :restart => :environment do
-      invoke 'unicorn:stop'
-      invoke 'unicorn:start'
-    end
+  #                                                                  Restart task
+  # ------------------------------------------------------------------------------
+  desc "Restart unicorn using 'upgrade'"
+  task :restart => :environment do
+    invoke 'unicorn:stop'
+    invoke 'unicorn:start'
+  end
+end
 
-    # For help in making your deploy script, see the Mina documentation:
-    #
-    #  - http://nadarei.co/mina
-    #  - http://nadarei.co/mina/tasks
-    #  - http://nadarei.co/mina/settings
-    #  - http://nadarei.co/mina/helpers
+  # For help in making your deploy script, see the Mina documentation:
+  #
+  #  - http://nadarei.co/mina
+  #  - http://nadarei.co/mina/tasks
+  #  - http://nadarei.co/mina/settings
+  #  - http://nadarei.co/mina/helpers
 
