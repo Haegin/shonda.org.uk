@@ -67,12 +67,13 @@ task :deploy => :environment do
       invoke :'unicorn:restart'
     end
   end
+end
 
-  #                                                                       Unicorn
-  # ==============================================================================
-  namespace :unicorn do
-    set :unicorn_pid, "#{app_path}/tmp/pids/unicorn.pid"
-    set :start_unicorn, %{
+#                                                                       Unicorn
+# ==============================================================================
+namespace :unicorn do
+  set :unicorn_pid, "#{app_path}/tmp/pids/unicorn.pid"
+  set :start_unicorn, %{
     cd #{app_path}
     chruby-exec 1.9.3 -- bundle exec unicorn -c #{app_path}/config/unicorn/#{rails_env}.rb -E #{rails_env} -D
     }
@@ -103,13 +104,11 @@ task :deploy => :environment do
       invoke 'unicorn:stop'
       invoke 'unicorn:start'
     end
-  end
-end
 
-# For help in making your deploy script, see the Mina documentation:
-#
-#  - http://nadarei.co/mina
-#  - http://nadarei.co/mina/tasks
-#  - http://nadarei.co/mina/settings
-#  - http://nadarei.co/mina/helpers
+    # For help in making your deploy script, see the Mina documentation:
+    #
+    #  - http://nadarei.co/mina
+    #  - http://nadarei.co/mina/tasks
+    #  - http://nadarei.co/mina/settings
+    #  - http://nadarei.co/mina/helpers
 
