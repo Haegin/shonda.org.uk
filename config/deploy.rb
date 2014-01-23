@@ -42,14 +42,14 @@ end
 # For Rails apps, we'll make some of the shared paths that are shared between
 # all releases.
 task :setup => :environment do
+  queue! %[mkdir -p "#{deploy_to}/shared/pids"]
+  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/pids"]
+
   queue! %[mkdir -p "#{deploy_to}/shared/log"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/log"]
 
   queue! %[mkdir -p "#{deploy_to}/shared/config"]
   queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config"]
-
-  queue! %[touch "#{deploy_to}/shared/config/database.yml"]
-  queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
 end
 
 desc "Deploys the current version to the server."
@@ -64,9 +64,45 @@ task :deploy => :environment do
     invoke :'rails:assets_precompile'
 
     to :launch do
-      queue "#{deploy_to}/current/config/unicorn_init.sh upgrade"
+      invoke :'unicorn:restart'
     end
   end
+
+  #                                                                       Unicorn
+  # ==============================================================================
+  namespace :unicorn do
+    set :unicorn_pid, "#{app_path}/tmp/pids/unicorn.pid"
+    set :start_unicorn, %{
+    cd #{app_path}
+    chruby-exec 1.9.3 -- bundle exec unicorn -c #{app_path}/config/unicorn/#{rails_env}.rb -E #{rails_env} -D
+    }
+
+    #                                                                    Start task
+    # ------------------------------------------------------------------------------
+    desc "Start unicorn"
+    task :start => :environment do
+      queue 'echo "-----> Start Unicorn"'
+      queue! start_unicorn
+    end
+
+    #                                                                     Stop task
+    # ------------------------------------------------------------------------------
+    desc "Stop unicorn"
+    task :stop do
+      queue 'echo "-----> Stop Unicorn"'
+      queue! %{
+      test -s "#{unicorn_pid}" && kill -QUIT `cat "#{unicorn_pid}"` && echo "Stop Ok" && exit 0
+      echo >&2 "Not running"
+      }
+    end
+
+    #                                                                  Restart task
+    # ------------------------------------------------------------------------------
+    desc "Restart unicorn using 'upgrade'"
+    task :restart => :environment do
+      invoke 'unicorn:stop'
+      invoke 'unicorn:start'
+    end
 end
 
 # For help in making your deploy script, see the Mina documentation:
