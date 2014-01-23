@@ -24,7 +24,7 @@ if [ -f $OLDPID ]; then
   exit 1
 fi
 
- get the PID of the current unicorn
+# get the PID of the current unicorn
 CURRUNI=`cat $PID`
 
 # verify the PID is actually running Unicorn
