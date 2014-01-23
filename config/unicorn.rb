@@ -15,7 +15,7 @@ stdout_path "#{APP_PATH}/log/unicorn.log"
 
 pid "#{APP_PATH}/tmp/pids/unicorn.pid"
 
-listen "/tmp/unicorn.shonda.sock"
+listen "/tmp/unicorn.shonda.sock", :backlog => 64
 
 # Force the bundler gemfile environment variable to
 # reference the capistrano "current" symlink
