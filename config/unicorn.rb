@@ -11,8 +11,8 @@ BASE_PATH = "/home/deploy/shonda.org.uk"
 APP_PATH = "#{BASE_PATH}/current"
 working_directory APP_PATH
 
-stderr_path "#{APP_PATH}/log/unicorn.log"
-stdout_path "#{APP_PATH}/log/unicorn.log"
+stderr_path File.expand_path("#{BASE_PATH}/shared/log/unicorn.stderr.log", __FILE__)
+stdout_path File.expand_path("#{BASE_PATH}/shared/pids/unicorn.stdout.log", __FILE__)
 
 pid "#{APP_PATH}/tmp/pids/unicorn.pid"
 pid File.expand_path("#{BASE_PATH}/shared/pids/unicorn.pid", __FILE__)
