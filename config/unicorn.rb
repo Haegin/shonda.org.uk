@@ -7,13 +7,15 @@ worker_processes workers
 preload_app true
 timeout 300
 
-APP_PATH = "/home/deploy/shonda.org.uk/current"
+BASE_PATH = "/home/deploy/shonda.org.uk"
+APP_PATH = "#{BASE_PATH}/current"
 working_directory APP_PATH
 
 stderr_path "#{APP_PATH}/log/unicorn.log"
 stdout_path "#{APP_PATH}/log/unicorn.log"
 
 pid "#{APP_PATH}/tmp/pids/unicorn.pid"
+pid File.expand_path("#{BASE_PATH}/shared/pids/unicorn.pid", __FILE__)
 
 listen "/tmp/unicorn.shonda.sock", :backlog => 64
 
