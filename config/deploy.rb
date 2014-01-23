@@ -64,7 +64,7 @@ task :deploy => :environment do
     invoke :'rails:assets_precompile'
 
     to :launch do
-      queue "#{deploy_to}/current/config/unicorn_hot_restart.sh"
+      queue "#{deploy_to}/current/config/unicorn_init.sh upgrade"
     end
   end
 end
